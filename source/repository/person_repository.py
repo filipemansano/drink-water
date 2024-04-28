@@ -1,3 +1,4 @@
+from typing import List
 from source.model.person_model import Person
 from source.model.meta_model import Meta
 
@@ -15,6 +16,9 @@ class IPersonRepository:
         pass
 
     def add_meta(self, person_id: str, meta: Meta) -> Meta:
+        pass
+
+    def get_metas(self, person_id: str) -> List[Meta]:
         pass
 
     def remove_meta(self, person_id: str, meta_id: str) -> None:

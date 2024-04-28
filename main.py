@@ -11,14 +11,17 @@ from source.services.person_service import PersonService
 
 repo_factory = RepositoryFactory()
 messasing_factory = MessagingFactory()
+adapter = messasing_factory.get_adapter()
 
 person_service = PersonService(
     repository=repo_factory.get_repository(IPersonRepository),
+    event_manager=adapter
 )
 
 drink_service = DrinkService(
-    repository=repo_factory.get_repository(IDrinkRepository), 
-    event_manager=messasing_factory.get_adapter()
+    repository=repo_factory.get_repository(IDrinkRepository),
+    person_repository=repo_factory.get_repository(IPersonRepository), 
+    event_manager=adapter
 )
 
 drink_listener = DrinkEventListener(service=drink_service)

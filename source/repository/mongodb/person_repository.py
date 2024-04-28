@@ -46,6 +46,13 @@ class MongoDBPersonRepository(IPersonRepository):
 
         return meta
 
+    def get_metas(self, person_id: str) -> list[Meta]:
+        person_data = self.collection.find_one({'_id': ObjectId(person_id)}, {'_id': 0, 'meta': 1})
+        if person_data:
+            metas = [Meta(**meta) for meta in person_data['meta']]
+            return metas
+        return None
+    
     def remove_meta(self, person_id: str, meta_id: str) -> None:
         self.collection.update_one(
             {'_id': ObjectId(person_id)}, 
