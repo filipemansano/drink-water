@@ -90,3 +90,124 @@ source ./env/bin/activate
 ```
 pip3 install -r requirements.txt
 ```
+
+4 - execute a aplciação
+```
+python3 main.py
+```
+
+## Utilização
+
+[POST] /person (criar uma nova conta)
+```curl
+curl --location 'http://127.0.0.1:5003/person/' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "Filipe Mansano",
+    "age": 31,
+    "weight": 82.5,
+    "gender": 1,
+    "email": "filipemansano@gmail.com",
+    "password": "abc"
+}'
+```
+
+[POST] /login (autenticar)
+```curl
+curl --location 'http://127.0.0.1:5003/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "filipemansano@gmail.com",
+    "password": "abc"
+}'
+```
+
+[GET] /person/ (obter detalhes do usuário logado)
+```curl
+curl --location 'http://127.0.0.1:5003/person/' \
+--header 'Authorization: Bearer <token>'
+```
+
+[PATCH] /person/ (atualizar dados usuário logado)
+```curl
+curl --location --request PATCH 'http://127.0.0.1:5003/person/' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer  <token>' \
+--data '{
+    "name": "Mansano"
+}'
+```
+
+[DELETE] /person/ (deletar o usuário logado)
+```curl
+curl --location 'http://127.0.0.1:5003/person/' \
+--header 'Authorization: Bearer <token>'
+```
+
+[POST] /person/meta (criar uma nova meta)
+```curl
+curl --location 'http://127.0.0.1:5003/person/meta' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer  <token>' \
+--data '{
+    "quantity": 2000, (Valor em ML)
+    "period": 1  (1 = Diario, 2 = Semanal)
+}'
+```
+
+[POST] /person/meta/{meta-id} (atualizar uma meta)
+```curl
+curl --location --request PATCH 'http://127.0.0.1:5003/person/meta/{meta-id}' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer  <token>' \
+--data '{
+    "quantity": 1502
+}'
+```
+
+[DELETE] /person/meta/{meta-id} (deletar uma meta)
+```curl
+curl --location --request DELETE 'http://127.0.0.1:5003/person/meta/{meta-id}' \
+--header 'Authorization: Bearer  <token>'
+```
+
+[POST] /drink (inserir um registro de bebida)
+```curl
+curl --location 'http://127.0.0.1:5003/drink/' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer  <token>' \
+--data '{
+    "ml": 10
+}'
+```
+
+[DELETE] /drink/{drink-id} (deletar uma registro de bebida)
+```curl
+curl --location --request DELETE 'http://127.0.0.1:5003/drink/{drink-id}' 
+--header 'Authorization: Bearer  <token>'
+```
+
+## Histórico
+Toda vez que um novo registro de bebida é inserido é atualizado as metas que tem esse resultado gravado na coleção do mongodb
+```json
+{
+  "_id": {
+    "$oid": "662eec68ca20b7e8fc1beb61"
+  },
+  "meta": {
+    "quantity": 1502,
+    "id": "be10de6c-be29-49d3-8c3b-1777851cba1b",
+    "period": 1
+  },
+  "inactive": false,
+  "start": {
+    "$date": "2024-04-28T00:00:00.000Z"
+  },
+  "end": {
+    "$date": "2024-04-28T23:59:59.999Z"
+  },
+  "ml_dring": 10,
+  "ml_drink_left": 1492,
+  "achieved": false
+}
+```
