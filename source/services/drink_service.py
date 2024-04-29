@@ -29,8 +29,9 @@ class DrinkService:
 
         return drink_created
     
-    def remove_drink(self, person_id: str, drink_id: str) -> None:
+    def remove_drink(self, person_id: str, drink_id: Optional[str] = None) -> None:
         self.repository.remove_drink(person_id, drink_id)
+
     
     def inactive_meta_history(self, meta: Union[str, Meta]):
         id = meta if isinstance(meta, str) else meta.id

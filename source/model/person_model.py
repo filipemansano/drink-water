@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Any, List, Optional, Union
-from pydantic import ValidationInfo, field_validator, model_validator
+from pydantic import SecretStr, ValidationInfo, field_validator, model_validator
 from source.enum.gender_enum import GenderEnum
 from source.model.meta_model import Meta
 from source.model.validators.base_validator import BaseValidator
@@ -8,9 +8,11 @@ from source.model.validators.base_validator import BaseValidator
 class Person(BaseValidator):
 
     def __init__(self, **data: Any):
-        super().__init__(check_fields_on_create=['name', 'age', 'weight', 'gender'], **data)
+        super().__init__(check_fields_on_create=['name', 'age', 'weight', 'gender', 'password', 'email'], **data)
 
     name: Optional[str] = None
+    email: Optional[str] = None
+    password: Optional[SecretStr] = None
     age: Optional[int] = None
     weight: Optional[float] = None
     gender: Optional[GenderEnum] = None

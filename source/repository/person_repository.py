@@ -15,6 +15,9 @@ class IPersonRepository:
     def find_person(self, person_id: str) -> Person:
         pass
 
+    def find_person_by_email(self, email: str) -> Person:
+        pass
+
     def add_meta(self, person_id: str, meta: Meta) -> Meta:
         pass
 

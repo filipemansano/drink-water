@@ -1,4 +1,5 @@
 
+from typing import Optional
 from bson import ObjectId
 from source.database.mongodb_connection import MongoDBConnection
 from source.model.drink_model import Drink
@@ -21,8 +22,13 @@ class MongoDBDrinkRepository(IDrinkRepository):
         drink.id = str(drink_data.inserted_id)
         return drink
 
-    def remove_drink(self, person_id: str, drink_id) -> None:
-        self.collection.delete_one({'person_id': ObjectId(person_id), '_id': ObjectId(drink_id)})
+    def remove_drink(self, person_id: str, drink_id: Optional[str] = None) -> None:
+        filters = {'person_id': ObjectId(person_id)}
+        if drink_id:
+            filters['id'] = ObjectId(drink_id)
+            self.collection.delete_one(filters)
+        else:
+            self.collection.delete_many(filters)
     
     def inactive_meta_history(self, meta_id: str) -> None:
         self.db['drink_history'].update_one(

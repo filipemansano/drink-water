@@ -1,6 +1,5 @@
 from pymongo import MongoClient
 import os
-from dotenv import load_dotenv
 
 class MongoDBConnection():
 
@@ -9,8 +8,6 @@ class MongoDBConnection():
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(MongoDBConnection, cls).__new__(cls)
-            
-            load_dotenv()
             
             host = os.getenv("MONGO_HOST")
             username = os.getenv("MONGO_USERNAME")

@@ -14,9 +14,10 @@ class MongoDBPersonRepository(IPersonRepository):
         self.collection = db['person']
 
     def add_person(self, person: Person) -> Person:
-        person_data = self.collection.insert_one(
-            person.model_dump(exclude=['id', 'metas'], exclude_none=True)
-        )
+        data = person.model_dump(exclude=['id', 'metas'], exclude_none=True)
+        data['password'] = person.password.get_secret_value()
+        person_data = self.collection.insert_one(data)
+
         person.id = str(person_data.inserted_id)
         return person
 
@@ -32,6 +33,13 @@ class MongoDBPersonRepository(IPersonRepository):
 
     def find_person(self, person_id: str) -> Person:
         person_data = self.collection.find_one({'_id': ObjectId(person_id)})
+        if person_data:
+            person_data['id'] = str(person_data.pop('_id'))
+            return Person(**person_data)
+        return None
+
+    def find_person_by_email(self, email: str) -> Person:
+        person_data = self.collection.find_one({'email': email})
         if person_data:
             person_data['id'] = str(person_data.pop('_id'))
             return Person(**person_data)

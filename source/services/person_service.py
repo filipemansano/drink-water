@@ -1,12 +1,13 @@
 from datetime import datetime
 from typing import Optional
-
 from source.enum.meta_event_enum import MetaEventEnum
+from source.enum.person_event_enum import PersonEventEnum
 from source.events.event_manager import EventManager
 from source.model.meta_model import Meta
 from source.model.person_model import Person
 from source.model.validators.base_validator import init_context
 from source.repository.person_repository import IPersonRepository
+from source.services.helpers import chipper_password
 
 class PersonService:
     def __init__(self, repository: IPersonRepository, event_manager: EventManager):
@@ -22,11 +23,14 @@ class PersonService:
     def create_person(
             self, 
             name: str, age: int, 
-            weight: float, gender: int) -> Person:
+            weight: float, gender: int, password: str, email: str) -> Person:
         
         with init_context({'mode': 'create'}):
-            person = Person(name=name, age=age, weight=weight, gender=gender)
+            person = Person(name=name, age=age, weight=weight, gender=gender, email=email, password=chipper_password(password))
 
+        if self.repository.find_person_by_email(email):
+            raise ValueError('Email already exists')
+        
         person.created_at = datetime.now()
         return self.repository.add_person(person)
     
@@ -43,6 +47,7 @@ class PersonService:
     
     def delete_person(self, person_id: str) -> None:
         self.repository.delete_person(person_id)
+        self.event_manager.publish(PersonEventEnum.person_deleted, person_id)
     
     def add_meta(self, person_id: str, quantity: float, period: int) -> Meta:
         with init_context({'mode': 'create'}):
