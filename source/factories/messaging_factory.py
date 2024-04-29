@@ -1,6 +1,6 @@
 from source.events.adapters.local_event_adapter import LocalEventAdapter
 from source.events.adapters.sqs_event_adapter import SQSEventAdapter
-from source.factories.settings import load_config
+from source.config.settings import load_config
 
 config = load_config()
 

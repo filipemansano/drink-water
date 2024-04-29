@@ -6,7 +6,7 @@ from source.events.event_manager import EventManager
 from source.model.meta_model import Meta
 from source.model.person_model import Person
 from source.model.validators.base_validator import init_context
-from source.repository.person_repository import IPersonRepository
+from source.repository.abstract.person_repository import IPersonRepository
 from source.services.helpers import chipper_password
 
 class PersonService:

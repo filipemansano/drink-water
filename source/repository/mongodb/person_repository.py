@@ -3,7 +3,7 @@ from bson import ObjectId
 from source.model.person_model import Person
 from source.database.mongodb_connection import MongoDBConnection
 from source.model.meta_model import Meta
-from source.repository.person_repository import IPersonRepository
+from source.repository.abstract.person_repository import IPersonRepository
 import uuid
 
 class MongoDBPersonRepository(IPersonRepository):

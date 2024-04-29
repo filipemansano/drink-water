@@ -4,7 +4,7 @@ from bson import ObjectId
 from source.database.mongodb_connection import MongoDBConnection
 from source.model.drink_model import Drink
 from source.model.meta_history_model import MetaHistory
-from source.repository.drink_repository import IDrinkRepository
+from source.repository.abstract.drink_repository import IDrinkRepository
 
 class MongoDBDrinkRepository(IDrinkRepository):
     def __init__(self):

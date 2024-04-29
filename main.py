@@ -6,8 +6,8 @@ from source.api.flask.drink_api import drink_blueprint
 from source.events.drink_events_listener import DrinkEventListener
 from source.factories.messaging_factory import MessagingFactory
 from source.factories.repository_factory import RepositoryFactory
-from source.repository.drink_repository import IDrinkRepository
-from source.repository.person_repository import IPersonRepository
+from source.repository.abstract.drink_repository import IDrinkRepository
+from source.repository.abstract.person_repository import IPersonRepository
 from source.services.auth_service import AuthService
 from source.services.drink_service import DrinkService
 from source.services.person_service import PersonService

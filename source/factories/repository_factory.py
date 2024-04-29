@@ -1,8 +1,8 @@
-from source.factories.settings import load_config
-from source.repository.drink_repository import IDrinkRepository
+from source.config.settings import load_config
+from source.repository.abstract.drink_repository import IDrinkRepository
 from source.repository.mongodb.drink_repository import MongoDBDrinkRepository
 from source.repository.mongodb.person_repository import MongoDBPersonRepository
-from source.repository.person_repository import IPersonRepository
+from source.repository.abstract.person_repository import IPersonRepository
 
 config = load_config()
 

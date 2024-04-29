@@ -1,5 +1,5 @@
 from source.model.person_model import Person
-from source.repository.person_repository import IPersonRepository
+from source.repository.abstract.person_repository import IPersonRepository
 from source.services.helpers import chipper_password
 
 class AuthService:

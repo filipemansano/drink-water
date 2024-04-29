@@ -6,8 +6,8 @@ from source.events.event_manager import EventManager
 from source.model.drink_model import Drink
 from source.model.meta_history_model import MetaHistory
 from source.model.meta_model import Meta
-from source.repository.drink_repository import IDrinkRepository
-from source.repository.person_repository import IPersonRepository
+from source.repository.abstract.drink_repository import IDrinkRepository
+from source.repository.abstract.person_repository import IPersonRepository
 
 class DrinkService:
     def __init__(self, repository: IDrinkRepository, person_repository: IPersonRepository, event_manager: EventManager):
